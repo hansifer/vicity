@@ -4,6 +4,25 @@
 
 Vicity is location-first social networking. Your feed and what you post are driven by what's happening around you, not who you follow.
 
+## Use cases
+
+- community event
+- concert
+- yard sale
+- ice cream truck
+- promotion
+- lost and found
+- wildlife citing
+- lost pet citing
+- long line
+- accident
+- construction
+- road closure
+- speed trap
+- hazard
+- police presence
+- suspicious activity
+
 ## v1
 
 - Anonymous reading of posts in your vicinity
@@ -20,6 +39,8 @@ Vicity is location-first social networking. Your feed and what you post are driv
 - Premium tier to lift proximity limitation, unlock access to historic posts
 - Blur faces, license plates, etc in photos
 - Admin review tooling for flagged posts, photo moderation expansion, and abuse analytics
+- Post location follows poster (eg, ice cream truck)
+- Subscribe to alerts based on interests
 
 ## Stack
 
