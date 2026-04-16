@@ -6,8 +6,8 @@ export const locationPermission = () => getNavigatorPermission('geolocation');
 
 const opts = {
   enableHighAccuracy: false, // true may be slower and consume more battery
-  timeout: 10_000,
-  maximumAge: 30_000,
+  timeout: 30_000, // may involve waiting for user interaction
+  maximumAge: 60_000,
 };
 
 // promise-based version of navigator.geolocation.getCurrentPosition
