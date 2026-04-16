@@ -58,5 +58,5 @@ Vicity is location-first social networking. Your feed and what you post are driv
 - Supabase with PostGIS for persistence and geospatial queries
 - Supabase Auth for passwordless email-based auth
 - Supabase Storage for photo uploads
-- bigdatacloud.net API for location names
+- [Mapbox Geocoding](https://docs.mapbox.com/api/search/geocoding/#reverse-geocoding) for reverse geocoded place names
 - OpenAI for moderation and spam review
