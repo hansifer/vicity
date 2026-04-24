@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" fill="none">
+  <defs>
+    <linearGradient id="sky" x1="800" y1="0" x2="800" y2="960" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7FBFF" />
+      <stop offset="0.48" stop-color="#DFECFA" />
+      <stop offset="1" stop-color="#C7D8EA" />
+    </linearGradient>
+    <radialGradient id="blueGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(250 170) rotate(10.2) scale(360 280)">
+      <stop stop-color="#7ACBFA" stop-opacity="0.58" />
+      <stop offset="1" stop-color="#7ACBFA" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="amberGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1320 165) rotate(-8.4) scale(300 240)">
+      <stop stop-color="#FFC37E" stop-opacity="0.52" />
+      <stop offset="1" stop-color="#FFC37E" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="haze" x1="800" y1="90" x2="800" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0096d5" stop-opacity="0.68" />
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0" />
+    </linearGradient>
+    <linearGradient id="streetGlow" x1="800" y1="690" x2="800" y2="960" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0" />
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.5" />
+    </linearGradient>
+    <pattern id="grid" width="96" height="96" patternUnits="userSpaceOnUse">
+      <path d="M96 0H0V96" stroke="#ADC5DD" stroke-opacity="0.38" />
+    </pattern>
+    <pattern id="windowBack" width="18" height="20" patternUnits="userSpaceOnUse">
+      <rect x="5" y="5" width="4" height="6" rx="1" fill="#D9EEFF" fill-opacity="0.34" />
+    </pattern>
+    <pattern id="windowFront" width="16" height="18" patternUnits="userSpaceOnUse">
+      <rect x="5" y="4" width="4" height="5" rx="1" fill="#FFF0D1" fill-opacity="0.24" />
+    </pattern>
+    <filter id="blur64" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="64" />
+    </filter>
+    <path id="skyline-back" d="M0 810V690H76V580H138V642H192V500H278V650H336V430H432V612H508V350H594V585H654V468H718V620H782V410H870V598H932V452H1018V626H1084V522H1140V676H1198V560H1268V700H1336V446H1420V622H1492V534H1560V650H1600V810H0Z" />
+    <path id="skyline-mid" d="M0 880V760H52V610H122V760H170V700H220V530H308V760H360V610H428V760H480V470H560V760H620V650H694V760H748V520H836V760H892V640H952V760H1016V560H1092V760H1154V646H1208V760H1268V500H1358V760H1406V610H1488V760H1542V700H1600V880H0Z" />
+    <path id="skyline-front" d="M0 960V830H88V720H156V830H214V660H312V830H354V742H422V830H486V590H582V830H648V700H716V830H786V630H892V830H954V714H1016V830H1082V670H1152V830H1218V610H1320V830H1368V734H1444V830H1510V680H1600V960H0Z" />
+  </defs>
+
+  <rect width="1600" height="960" fill="url(#sky)" />
+  <rect width="1600" height="960" fill="url(#grid)" opacity="0.54" />
+
+  <ellipse cx="250" cy="170" rx="320" ry="230" fill="url(#blueGlow)" filter="url(#blur64)" />
+  <ellipse cx="1320" cy="165" rx="280" ry="220" fill="url(#amberGlow)" filter="url(#blur64)" />
+  <rect y="0" width="1600" height="600" fill="url(#haze)" />
+
+  <g opacity="0.28" stroke="#8BA9C6" stroke-width="2">
+    <path d="M-60 320C120 250 250 240 430 290C610 340 730 336 860 288C990 240 1140 220 1370 278C1490 308 1560 314 1660 300" />
+    <path d="M-20 390C160 340 330 348 500 388C670 428 800 434 938 394C1080 352 1230 332 1460 376C1542 392 1600 400 1648 396" />
+    <path d="M20 470C214 426 392 438 552 474C712 510 856 520 1000 484C1146 446 1284 434 1528 462" />
+  </g>
+
+  <g opacity="0.26">
+    <circle cx="1220" cy="128" r="68" fill="#FFF4D7" />
+    <circle cx="1220" cy="128" r="102" fill="#FFF4D7" fill-opacity="0.34" />
+  </g>
+
+  <g opacity="0.55">
+    <path d="M180 172L232 150L276 180L332 144L382 182L428 160L474 184" stroke="#FFFFFF" stroke-opacity="0.48" stroke-width="2" stroke-linecap="round" />
+    <path d="M1080 226L1138 202L1188 230L1258 198L1308 234L1360 210L1410 238" stroke="#FFFFFF" stroke-opacity="0.44" stroke-width="2" stroke-linecap="round" />
+  </g>
+
+  <use href="#skyline-back" fill="#5B7695" fill-opacity="0.3" />
+  <use href="#skyline-back" fill="url(#windowBack)" opacity="0.28" />
+  <use href="#skyline-mid" fill="#2C4B6A" fill-opacity="0.36" />
+  <use href="#skyline-mid" fill="url(#windowBack)" opacity="0.18" />
+  <use href="#skyline-front" fill="#142A45" />
+  <use href="#skyline-front" fill="url(#windowFront)" opacity="0.2" />
+
+  <rect y="720" width="1600" height="240" fill="url(#streetGlow)" opacity="0.58" />
+
+  <g opacity="0.36">
+    <path d="M0 834C178 818 314 850 484 840C656 830 816 792 1004 810C1194 828 1376 886 1600 858" stroke="#E7F4FF" stroke-width="3" stroke-linecap="round" />
+    <path d="M0 880C194 870 322 904 514 894C706 884 862 844 1046 854C1230 864 1408 916 1600 900" stroke="#FBE9CF" stroke-opacity="0.62" stroke-width="2" stroke-linecap="round" />
+  </g>
+</svg>
