@@ -12,5 +12,5 @@ dist
 tsconfig.tsbuildinfo
 notes.txt
 notes.md
-/notes-*
+/docs/notes-*
 prompts.txt
