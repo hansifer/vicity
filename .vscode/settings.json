@@ -1,3 +1,10 @@
 {
-  "cSpell.words": ["mapbox", "supabase"]
+  "cSpell.words": ["mapbox", "supabase"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.lintTask.enable": true
 }
