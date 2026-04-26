@@ -4,7 +4,6 @@ import {
   permissionOnchange,
 } from '@/lib/util/permissions';
 import { serializer } from '@/lib/util/async';
-import { getExceptionText } from '@/lib/util/logging';
 
 // provides reactive permission state
 // - includes polling fallback for browsers that don't support permissions onchange
@@ -13,16 +12,6 @@ export const usePermission = (permission: PermissionName) => {
   const [state, setState] = useState<
     PermissionState | 'pending' | 'unsupported' | 'error'
   >('pending');
-  const [description, setDescription] = useState<string>('');
-
-  const fail = useCallback((ex: any, prefix?: string) => {
-    const text = getExceptionText(ex, prefix);
-
-    console.warn(text);
-
-    setState('error');
-    setDescription(text);
-  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -35,10 +24,6 @@ export const usePermission = (permission: PermissionName) => {
       setState(state);
 
       if (state === 'unsupported') {
-        setDescription(
-          `${permission} permission is not supported by your browser.`,
-        );
-
         return;
       }
 
@@ -78,10 +63,9 @@ export const usePermission = (permission: PermissionName) => {
 
       pollingId = setInterval(handler, 2_000);
     }
-  }, [fail, permission]);
+  }, [permission]);
 
   return {
     state,
-    description,
   };
 };
