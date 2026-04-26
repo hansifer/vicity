@@ -2,7 +2,7 @@ import { getExceptionText } from '@/lib/util/logging';
 
 export async function getNavigatorPermission(
   name: PermissionName,
-): Promise<PermissionState | 'unsupported'> {
+): Promise<PermissionState | 'unsupported' | 'error'> {
   if (!navigator.permissions) {
     return 'unsupported';
   }
@@ -11,12 +11,14 @@ export async function getNavigatorPermission(
     return (await navigator.permissions.query({ name })).state;
   } catch (ex) {
     console.warn(getExceptionText(ex, `Error checking permission "${name}"`));
-  }
 
-  return 'unsupported';
+    return ex instanceof DOMException && ex.name === 'InvalidStateError'
+      ? 'error'
+      : 'unsupported';
+  }
 }
 
-// returns unregister function or null if onchange is not supported
+// returns unregister function or null if error or onchange is not supported
 export async function permissionOnchange(
   name: PermissionName,
   callback: (state: PermissionState) => void,
