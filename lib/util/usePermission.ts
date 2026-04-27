@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   getNavigatorPermission,
   permissionOnchange,
@@ -13,13 +13,18 @@ export const usePermission = (permission: PermissionName) => {
     PermissionState | 'pending' | 'unsupported' | 'error'
   >('pending');
 
-  useEffect(() => {
-    let isMounted = true;
-    let unregisterPermissionOnchange: (() => void) | null = null;
-    let pollingId: NodeJS.Timeout | undefined = undefined;
+  const isMountedRef = useRef(true);
+  const unregisterPermissionOnchangeRef = useRef<(() => void) | null>(null);
+  const pollingIdRef = useRef<NodeJS.Timeout | undefined>(undefined);
+
+  const init = useCallback(() => {
+    if (!isMountedRef.current) return;
+
+    unregisterPermissionOnchangeRef.current?.();
+    clearInterval(pollingIdRef.current);
 
     getNavigatorPermission(permission).then(async (state) => {
-      if (!isMounted) return;
+      if (!isMountedRef.current) return;
 
       setState(state);
 
@@ -27,45 +32,51 @@ export const usePermission = (permission: PermissionName) => {
         return;
       }
 
-      unregisterPermissionOnchange = await permissionOnchange(
+      unregisterPermissionOnchangeRef.current = await permissionOnchange(
         permission,
         (state) => {
-          if (isMounted) setState(state);
+          if (isMountedRef.current) setState(state);
         },
       );
 
-      if (!isMounted) return;
+      if (!isMountedRef.current) return;
 
-      if (!unregisterPermissionOnchange) {
+      if (!unregisterPermissionOnchangeRef.current) {
         startPolling();
       }
     });
 
-    return () => {
-      isMounted = false;
-      unregisterPermissionOnchange?.();
-      clearInterval(pollingId);
-    };
-
     function startPolling() {
-      if (pollingId != null) return;
+      if (pollingIdRef.current != null) return;
 
       const queuePermQuery = serializer();
 
       const handler = () => {
-        if (!isMounted) return;
+        if (!isMountedRef.current) return;
 
         queuePermQuery(async () => {
           const perm = await getNavigatorPermission(permission);
-          if (isMounted) setState(perm);
+          if (isMountedRef.current) setState(perm);
         });
       };
 
-      pollingId = setInterval(handler, 2_000);
+      pollingIdRef.current = setInterval(handler, 2_000);
     }
   }, [permission]);
 
+  useEffect(() => {
+    isMountedRef.current = true;
+    init();
+
+    return () => {
+      isMountedRef.current = false;
+      unregisterPermissionOnchangeRef.current?.();
+      clearInterval(pollingIdRef.current);
+    };
+  }, [init]);
+
   return {
     state,
+    init,
   };
 };
