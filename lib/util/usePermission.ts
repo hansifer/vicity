@@ -14,17 +14,21 @@ export const usePermission = (permission: PermissionName) => {
   >('pending');
 
   const isMountedRef = useRef(true);
+  const versionRef = useRef(0); // stale result check for async calls
   const unregisterPermissionOnchangeRef = useRef<(() => void) | null>(null);
   const pollingIdRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const init = useCallback(() => {
     if (!isMountedRef.current) return;
 
+    versionRef.current++;
+    const version = versionRef.current;
+
     unregisterPermissionOnchangeRef.current?.();
     clearInterval(pollingIdRef.current);
 
     getNavigatorPermission(permission).then(async (state) => {
-      if (!isMountedRef.current) return;
+      if (!isMountedRef.current || version !== versionRef.current) return;
 
       setState(state);
 
@@ -35,11 +39,12 @@ export const usePermission = (permission: PermissionName) => {
       unregisterPermissionOnchangeRef.current = await permissionOnchange(
         permission,
         (state) => {
-          if (isMountedRef.current) setState(state);
+          if (isMountedRef.current && version === versionRef.current)
+            setState(state);
         },
       );
 
-      if (!isMountedRef.current) return;
+      if (!isMountedRef.current || version !== versionRef.current) return;
 
       if (!unregisterPermissionOnchangeRef.current) {
         startPolling();
@@ -52,11 +57,12 @@ export const usePermission = (permission: PermissionName) => {
       const queuePermQuery = serializer();
 
       const handler = () => {
-        if (!isMountedRef.current) return;
+        if (!isMountedRef.current || version !== versionRef.current) return;
 
         queuePermQuery(async () => {
           const perm = await getNavigatorPermission(permission);
-          if (isMountedRef.current) setState(perm);
+          if (isMountedRef.current && version === versionRef.current)
+            setState(perm);
         });
       };
 
