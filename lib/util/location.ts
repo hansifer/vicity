@@ -1,17 +1,19 @@
 import { getNavigatorPermission } from '@/lib/util/permissions';
 
-// Utility functions related to location access and geolocation APIs
+// Utility functions related to geolocation
 
-export const locationPermission = () => getNavigatorPermission('geolocation');
+export const getGeoPermission = () => getNavigatorPermission('geolocation');
 
-const opts = {
+const defaultOpts = {
   enableHighAccuracy: false, // true may be slower and consume more battery
   timeout: 30_000, // may involve waiting for user interaction
   maximumAge: 60_000,
 };
 
 // promise-based version of navigator.geolocation.getCurrentPosition
-export const getGeoPosition = (): Promise<GeolocationPosition> => {
+export const getGeoPosition = (
+  opts: PositionOptions = {},
+): Promise<GeolocationPosition> => {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
       reject(new Error('Geolocation is not supported by your browser.'));
@@ -51,7 +53,7 @@ export const getGeoPosition = (): Promise<GeolocationPosition> => {
             );
         }
       },
-      opts,
+      { ...defaultOpts, ...opts },
     );
   });
 };
@@ -60,6 +62,7 @@ export const getGeoPosition = (): Promise<GeolocationPosition> => {
 // handler receives position or { error: string }
 export const watchGeoPosition = (
   handler: (position: GeolocationPosition | { error: string }) => void,
+  opts: PositionOptions = {},
 ): (() => void) => {
   if (!navigator.geolocation) {
     throw new Error('Geolocation is not supported by your browser.');
@@ -79,7 +82,7 @@ export const watchGeoPosition = (
                 : 'An unknown error occurred while getting location.',
       });
     },
-    opts,
+    { ...defaultOpts, ...opts },
   );
 
   if (!watchId) {
