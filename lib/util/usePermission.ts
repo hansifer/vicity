@@ -44,9 +44,11 @@ export const usePermission = (permission: PermissionName) => {
         },
       );
 
-      if (!isMountedRef.current || version !== versionRef.current) return;
-
-      if (!unregisterPermissionOnchangeRef.current) {
+      if (
+        !unregisterPermissionOnchangeRef.current &&
+        isMountedRef.current &&
+        version === versionRef.current
+      ) {
         startPolling();
       }
     });
