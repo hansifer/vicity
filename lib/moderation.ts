@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
 
-import { safeJsonParse } from '@/lib/utils';
+import { safeJsonParse } from '@/lib/util/json';
 
 type ModeratePostInput = {
   activityDescription: string;
