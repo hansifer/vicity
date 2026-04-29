@@ -6,5 +6,11 @@
     "typescript",
     "typescriptreact"
   ],
-  "eslint.lintTask.enable": true
+  "eslint.lintTask.enable": true,
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#02311a",
+    "statusBar.foreground": "#ffffffaa",
+    "statusBar.debuggingBackground": "#8a5a00",
+    "statusBar.debuggingForeground": "#fff4d6"
+  }
 }
